@@ -63,4 +63,19 @@ class DemoApplicationTests {
 		assertThat(officerRequest.getPath(), equalTo("/Officers?CompanyNumber=06500244"));
 	}
 
+	@Test
+	void returns_bad_request_when_no_criteria() {
+		var response = given()
+				.contentType("application/json")
+				.body("{}")
+				.post("/search")
+				.then()
+				.statusCode(400)
+				.extract()
+				.response()
+				.asString();
+
+		assertThat(response, equalTo("No criteria given"));
+	}
+
 }
